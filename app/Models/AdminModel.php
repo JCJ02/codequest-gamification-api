@@ -9,6 +9,8 @@ use App\Models\AccountModel;
 class AdminModel extends Model
 {
     // ADMIN MODEL
+    protected $table = 'admin';
+
     protected $fillable = [
         'firstname',
         'lastname',
@@ -16,7 +18,7 @@ class AdminModel extends Model
         'birthdate',
         'email',
         'role',
-        'password',
+        'account_id',
     ];
 
     public function account()
