@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
-use App\Models\AccountModel;
-
 class AdminModel extends Model
 {
-    // ADMIN MODEL
+    protected $table = "admin";
+
     protected $fillable = [
         'firstname',
         'lastname',
@@ -16,11 +13,11 @@ class AdminModel extends Model
         'birthdate',
         'email',
         'role',
-        'password',
     ];
 
     public function account()
     {
-        return $this->belongsTo(AccountModel::class);
+        return $this->hasOne(AccountModel::class, 'admin_id');
     }
 }
+

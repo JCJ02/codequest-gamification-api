@@ -24,12 +24,13 @@ class RegisterRequest extends FormRequest
             'firstname' => 'required|max:255',
             'lastname' => 'required|max:255',
             'username' => 'required|max:255',
-            'birthdate' => 'required|date',
+            'birthdate' => 'required|date_format:m-d-Y',  
             'email' => 'required|email|unique:admin',
             'role' => 'nullable|string',
             'password' => 'required|string|min:8|confirmed',
         ];
     }
+
     public function messages(): array
     {
         return [
