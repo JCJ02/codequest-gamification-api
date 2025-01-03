@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AdminResource;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
-use App\Models\AdminModel;
-use App\Models\AccountModel;
+use App\Models\Admin;
+use App\Models\Student;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    // ADMIN CONTROLLER
     public function index()
     {
         return view('Hello World');
@@ -20,18 +19,22 @@ class AdminController extends Controller
     public function register(RegisterRequest $request)
     {
         try {
-            $accountData = $request->only('password');
-            $accountData['password'] = Hash::make($accountData['password']);
-            $account = AccountModel::create($accountData);
 
-            $adminData = $request->only(['firstname', 'lastname', 'username', 'birthdate', 'email', 'role']);
-            $adminData['account_id'] = $account->id; 
+            $validatedData = $request->validated();
+            $validatedData['birthdate'] = Carbon::createFromFormat('m-d-Y', $validatedData['birthdate'])->format('Y-m-d');
+            $validatedData['role'] = $validatedData['role'] ?? 'admin';
+            unset($validatedData['password_confirmation']);
 
-            $admin = AdminModel::create($adminData);
+            $admin = Admin::create($validatedData);
+
+            $account = $admin->account()->create([
+                'password' => Hash::make($validatedData['password']),
+            ]);
 
             return response()->json([
                 'message' => 'Admin Created Successfully',
-                'admin' => new AdminResource($admin),
+                'admin' => $admin,
+                'account' => $account
             ], 201);
         } catch (\Exception $e) {
             return response()->json([

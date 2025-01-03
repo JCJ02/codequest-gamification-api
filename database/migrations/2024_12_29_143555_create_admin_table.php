@@ -19,11 +19,8 @@ return new class extends Migration
             $table->date('birthdate');
             $table->string('email')->unique();
             $table->string('role')->default('admin');
-            $table->unsignedBigInteger('account_id')->nullable(); // Make it nullable
             $table->timestamps();
             $table->softDeletes();
-    
-            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('set null');
         });
     }
 
