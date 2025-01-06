@@ -3,42 +3,88 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\AdminRegisterRequest;
+use App\Http\Requests\AdminLoginRequest;
 use App\Models\Admin;
-use App\Models\Student;
-use Carbon\Carbon;
+use App\Http\Controllers\Controller;
+use Auth;
+use Log;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        return view('Hello World');
-    }
-
-    public function register(RegisterRequest $request)
+    // Admin Registration
+    public function register(AdminRegisterRequest $request): JsonResponse
     {
         try {
-
             $validatedData = $request->validated();
-            $validatedData['birthdate'] = Carbon::createFromFormat('m-d-Y', $validatedData['birthdate'])->format('Y-m-d');
-            $validatedData['role'] = $validatedData['role'] ?? 'admin';
-            unset($validatedData['password_confirmation']);
-
+            $validatedData['admin_password'] = Hash::make($validatedData['admin_password']);
             $admin = Admin::create($validatedData);
-
-            $account = $admin->account()->create([
-                'password' => Hash::make($validatedData['password']),
-            ]);
 
             return response()->json([
                 'message' => 'Admin Created Successfully',
                 'admin' => $admin,
-                'account' => $account
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error: ' . $e->getMessage()
+                'message' => 'Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    // Admin Login
+    public function login(AdminLoginRequest $request): JsonResponse
+    {
+        try {
+            $validatedData = $request->validated();
+
+            $admin = Admin::where('admin_name', $validatedData['admin_name'])->first();
+
+            if (!$admin || !Hash::check($validatedData['admin_password'], $admin->admin_password)) {
+                return response()->json([
+                    'message' => 'Invalid credentials.',
+                ], 401);
+            }
+
+            $existingToken = $admin->tokens()->first();
+            if ($existingToken) {
+                Log::info("Revoking existing token for admin: {$admin->admin_name}");
+                $existingToken->delete();
+            }
+
+            $token = $admin->createToken($admin->admin_name)->plainTextToken;
+            Log::info("Token created for admin: {$admin->admin_name}");
+
+            return response()->json([
+                'message' => 'Login successful.',
+                'admin' => $admin,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    // Admin Logout
+    public function logout(AdminLogoutRequest $request): JsonResponse
+    {
+        try {
+            $admin = Auth::admin();
+            if (!$admin) {
+                return response()->json([
+                    'message' => 'Admin not found.',
+                ], 404);
+            }
+
+            $admin->tokens()->delete();
+            return response()->json([
+                'message' => 'Logout successful.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error: ' . $e->getMessage(),
             ], 500);
         }
     }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class AdminRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,21 +21,17 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstname' => 'required|max:255',
-            'lastname' => 'required|max:255',
-            'username' => 'required|max:255',
-            'birthdate' => 'required|date_format:m-d-Y',  
-            'email' => 'required|email|unique:admin',
-            'role' => 'nullable|string',
-            'password' => 'required|string|min:8|confirmed',
+            'admin_name' => 'required|string|max:255',
+            'admin_password' => 'required|string|confirmed|min:8',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'email.email' => 'Invalid Email',
-            'email.unique' => 'This email address is already registered.',
+            'admin_name.required' => 'Name is required.',
+            'admin_password.required' => 'The Password Field is Required.',
+            'admin_password.min' => 'Password must be at least 8 characters long.',
         ];
     }
 }
