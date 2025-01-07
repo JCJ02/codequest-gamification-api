@@ -47,18 +47,13 @@ class AdminController extends Controller
                 ], 401);
             }
 
-            $existingToken = $admin->tokens()->first();
-            if ($existingToken) {
-                Log::info("Revoking existing token for admin: {$admin->admin_name}");
-                $existingToken->delete();
-            }
-
             $token = $admin->createToken($admin->admin_name)->plainTextToken;
             Log::info("Token created for admin: {$admin->admin_name}");
 
             return response()->json([
                 'message' => 'Login successful.',
                 'admin' => $admin,
+                'token' => $token,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -68,17 +63,20 @@ class AdminController extends Controller
     }
 
     // Admin Logout
-    public function logout(AdminLogoutRequest $request): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
         try {
-            $admin = Auth::admin();
+            $admin = $request->user(); 
             if (!$admin) {
                 return response()->json([
                     'message' => 'Admin not found.',
                 ], 404);
             }
 
-            $admin->tokens()->delete();
+            $admin->tokens->each(function ($token) {
+                $token->delete();
+            });
+
             return response()->json([
                 'message' => 'Logout successful.',
             ], 200);
@@ -89,3 +87,4 @@ class AdminController extends Controller
         }
     }
 }
+

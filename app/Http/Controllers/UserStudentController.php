@@ -41,25 +41,20 @@ class UserStudentController extends Controller
 
             $userstudent = UserStudent::where('username', $validatedData['username'])->first();
 
-            if ($userstudent && Hash::check($validatedData['user_password'], $userstudent->user_password)) {
-                $existingToken = $userstudent->tokens()->first();
-                if ($existingToken) {
-                    Log::info("Revoking existing token for user: {$userstudent->username}");
-                    $existingToken->delete();
-                }
-
-                $token = $userstudent->createToken($userstudent->username)->plainTextToken;
-                Log::info("Token created for user: {$userstudent->username}");
-
+            if (!$userstudent || !Hash::check($validatedData['user_password'], $userstudent->user_password)) {
                 return response()->json([
-                    'message' => 'Login successful.',
-                    'token' => $token,
-                ], 200);
+                    'message' => 'Invalid credentials.',
+                ], 401);
             }
 
+            $token = $userstudent->createToken($userstudent->username)->plainTextToken;
+            Log::info("Token created for user: {$userstudent->username}");
+
             return response()->json([
-                'message' => 'Invalid credentials.',
-            ], 401);
+                'message' => 'Login successful.',
+                'userstudent' => $userstudent,
+                'token' => $token,
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error: ' . $e->getMessage(),
@@ -71,14 +66,17 @@ class UserStudentController extends Controller
     public function logout(Request $request): JsonResponse
     {
         try {
-            $userstudent = Auth::user();
+            $userstudent = $request->user();
             if (!$userstudent) {
                 return response()->json([
                     'message' => 'User Student not found.',
                 ], 404);
             }
 
-            $userstudent->tokens()->delete();
+            $userstudent->tokens->each(function ($token) {
+                $token->delete();
+            });
+
             return response()->json([
                 'message' => 'Logout successful.',
             ], 200);

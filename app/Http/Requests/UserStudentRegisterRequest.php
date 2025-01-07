@@ -25,8 +25,8 @@ class UserStudentRegisterRequest extends FormRequest
             'firstname' => 'required|max:255',
             'lastname' => 'required|max:255',
             'birthdate' => 'required|date',
-            'email' => 'required|email|unique:user_student',
-            'role' => 'required|string',
+            'email' => 'required|email|unique:user_student,email',
+            'role' => 'nullable|string',
             'username' => 'required|string|max:255',
             'user_password' => 'required|string|confirmed|min:8',
         ];
@@ -42,10 +42,9 @@ class UserStudentRegisterRequest extends FormRequest
             'email.required' => 'Email is required.',
             'email.email' => 'Email must be a valid email address.',
             'email.unique' => 'Email is already taken.',
-            'role.required' => 'Role is required.',
             'user_password.required' => 'Password is required.',
             'user_password.min' => 'Password must be at least 8 characters long.',
-            // 'password.confirmed' => 'Password confirmation does not match.',
+            'password.confirmed' => 'Password confirmation does not match.',
         ];
     }
 }

@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('role')->default('user_student');
             $table->string('username')->unique();
             $table->string('user_password');
-            $table->string('token', 64)->unique();
             $table->timestamps();
             $table->softDeletes();
         });

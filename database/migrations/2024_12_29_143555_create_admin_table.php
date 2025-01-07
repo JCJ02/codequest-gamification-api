@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('admin_name');
             $table->string('admin_password');
             $table->string('role')->default('admin');
-            $table->string('token', 64)->unique();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -9,20 +9,27 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
-    // ADMIN MODEL
     use HasFactory, Notifiable, HasApiTokens;
 
+    // ADMIN MODEL
     protected $table = 'admin';
 
     protected $fillable = [
         'admin_name',
         'admin_password',
+        'role',  
     ];
 
-    protected $hidden = ['password'];
+    protected $hidden = ['admin_password'];
 
-    public function account()
+    protected static function boot()
     {
-        return $this->hasOne(UserStudent::class, 'admin_id');
+        parent::boot();
+
+        static::creating(function ($admin) {
+            if (empty($admin->role)) {
+                $admin->role = 'admin'; 
+            }
+        });
     }
 }
