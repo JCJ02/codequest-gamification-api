@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('role')->default('user_student');
             $table->string('username')->unique();
-            $table->string('password');
+            $table->string('user_password');
             $table->timestamps();
         });
     }
