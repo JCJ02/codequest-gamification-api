@@ -39,17 +39,17 @@ class UserStudentController extends Controller
         try {
             $validatedData = $request->validated();
 
-            $userstudent = UserStudent::where('user_name', $validatedData['user_name'])->first();
+            $userstudent = UserStudent::where('username', $validatedData['username'])->first();
 
             if ($userstudent && Hash::check($validatedData['user_password'], $userstudent->user_password)) {
                 $existingToken = $userstudent->tokens()->first();
                 if ($existingToken) {
-                    Log::info("Revoking existing token for user: {$userstudent->user_name}");
+                    Log::info("Revoking existing token for user: {$userstudent->username}");
                     $existingToken->delete();
                 }
 
-                $token = $userstudent->createToken($userstudent->user_name)->plainTextToken;
-                Log::info("Token created for user: {$userstudent->user_name}");
+                $token = $userstudent->createToken($userstudent->username)->plainTextToken;
+                Log::info("Token created for user: {$userstudent->username}");
 
                 return response()->json([
                     'message' => 'Login successful.',

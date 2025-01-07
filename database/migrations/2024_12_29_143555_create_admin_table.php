@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('admin_name');
             $table->string('admin_password');
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
 

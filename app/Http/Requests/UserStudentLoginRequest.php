@@ -11,7 +11,7 @@ class UserStudentLoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,18 @@ class UserStudentLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'username' => 'required|string|exists:user_student,username',
+            'user_password' => 'required|string|min:8',
+        ];
+    }
+
+    public function messages(): array  
+    {
+        return [
+            'username.required' => 'Username is required.',
+            'username.exists' => 'Username does not exist.',
+            'user_password.required' => 'Password is required.',
+            'user_password.min' => 'Password must be at least 8 characters long.',
         ];
     }
 }
