@@ -29,5 +29,5 @@ Route::prefix('lessons')->middleware('auth:sanctum')->group(function () {
     Route::get('/admin/lesson/{id}', [LessonAdminController::class, 'show']);
     Route::post('/admin/lesson-store', [LessonAdminController::class, 'store']);
     Route::put('/admin/lesson-update/{id}', [LessonAdminController::class, 'update']);
-    Route::delete('/admin/lesson-update/{id}', [LessonAdminController::class, 'destroy']);
+    Route::delete('/admin/lesson-delete/{id}', [LessonAdminController::class, 'destroy']);
 });

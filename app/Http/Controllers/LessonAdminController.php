@@ -29,6 +29,7 @@ class LessonAdminController extends Controller
     {
         try {
             $validatedData = $request->validated(); 
+            $validatedData['admin_id'] = auth()->id();
 
             $lesson = LessonAdmin::create($validatedData);
 
@@ -48,6 +49,7 @@ class LessonAdminController extends Controller
     {
         try {
             $lesson = LessonAdmin::with('admin')->find($id);
+            $validatedData['admin_id'] = auth()->id();
 
             return response()->json([
                 'lesson' => $lesson,
@@ -64,6 +66,7 @@ class LessonAdminController extends Controller
     {
         try {
             $validatedData = $request->validated(); 
+            $validatedData['admin_id'] = auth()->id();
 
             $lesson = LessonAdmin::find($id);
             $lesson->update($validatedData);
@@ -83,7 +86,8 @@ class LessonAdminController extends Controller
     {
         try {
             $lesson = LessonAdmin::findOrFail($id);
-            $lesson->delete(); // Soft delete
+            $validatedData['admin_id'] = auth()->id();
+            $lesson->delete(); 
 
             return response()->json([
                 'message' => 'Lesson deleted successfully.',
