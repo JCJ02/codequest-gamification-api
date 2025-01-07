@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lesson_admin', function (Blueprint $table) {
+        Schema::create('admin_level', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('admin_id')->nullable(); 
-            $table->string('lesson_vid', 500);
-            $table->string('lesson_title', 100);
-            $table->text('lesson_description', 500);
-            $table->string('lesson_prize', 100);
+            $table->unsignedBigInteger('admin_id')->nullable();
+            $table->unsignedBigInteger('language_id')->nullable();
+            $table->string('level_diffuculty', 100);
+            $table->string('level_prize', 100);
+            $table->string('level_task', 100);
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('admin_id')->references('id')->on('admin')->onDelete('set null');
+            $table->foreign('language_id')->references('id')->on('admin_language')->onDelete('set null');
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lesson_admin');
+        Schema::dropIfExists('admin_level');
     }
 };

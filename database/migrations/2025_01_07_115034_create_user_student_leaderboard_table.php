@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admin', function (Blueprint $table) {
+        Schema::create('user_student_leaderboard', function (Blueprint $table) {
             $table->id();
-            $table->string('admin_name');
-            $table->string('admin_password');
-            $table->string('role')->default('admin');
-            $table->string('token', 64)->unique();
+            $table->unsignedBigInteger('user_student_id')->nullable();
+            $table->unsignedBigInteger('user_student_score')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('user_student_id')->references('id')->on('user_student')->onDelete('set null');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('user_student_leaderboard');
     }
 };

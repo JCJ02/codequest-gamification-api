@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lesson_admin', function (Blueprint $table) {
+        Schema::create('admin_badges', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('admin_id')->nullable(); 
-            $table->string('lesson_vid', 500);
-            $table->string('lesson_title', 100);
-            $table->text('lesson_description', 500);
-            $table->string('lesson_prize', 100);
+            $table->unsignedBigInteger('admin_id')->nullable();
+            $table->string('badge_name', 100);
+            $table->string('badge_picture', 100);
+            $table->string('badge_description', 100);
+            $table->string('badge_requirements', 100);
             $table->timestamps();
             $table->softDeletes();
-
+      
             $table->foreign('admin_id')->references('id')->on('admin')->onDelete('set null');
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lesson_admin');
+        Schema::dropIfExists('admin_badges');
     }
 };
