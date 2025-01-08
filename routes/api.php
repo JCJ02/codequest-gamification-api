@@ -31,3 +31,12 @@ Route::prefix('lessons')->middleware('auth:sanctum')->group(function () {
     Route::put('/admin/lesson-update/{id}', [LessonAdminController::class, 'update']);
     Route::delete('/admin/lesson-delete/{id}', [LessonAdminController::class, 'destroy']);
 });
+
+// Admin Level Route (Requires Authentication Token)
+Route::prefix('admin-levels')->middleware('auth:sanctum')->group(function () {
+    Route::get('/admin/level', [AdminLevelController::class, 'index']);
+    Route::post('/admin/store', [AdminLevelController::class, 'store']);
+    Route::get('/admin/{id}', [AdminLevelController::class, 'show']);
+    Route::put('/admin/update/{id}', [AdminLevelController::class, 'update']);
+    Route::delete('/admin/delete/{id}', [AdminLevelController::class, 'destroy']);
+});
