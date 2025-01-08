@@ -97,15 +97,15 @@ class AdminLevelController extends Controller
     public function destroy($id): JsonResponse
     {
         try {
-            $levelAdmin = AdminLevel::find($id);
+            $adminLevel = AdminLevel::find($id);
 
-            if (!$levelAdmin) {
+            if (!$adminLevel) {
                 return response()->json([
                     'message' => 'Admin level not found.',
                 ], 404);
             }
 
-            $levelAdmin->delete();
+            $adminLevel->delete();
 
             return response()->json([
                 'message' => 'Admin level deleted successfully.',
