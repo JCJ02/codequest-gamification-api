@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class AdminLevel extends Model
 {
     use HasFactory, SoftDeletes;
@@ -21,7 +20,7 @@ class AdminLevel extends Model
 
     public function language()
     {
-        return $this->belongsTo(LanguageAdmin::class, 'language_id');
+        return $this->belongsTo(AdminLanguage::class, 'language_id');
     }
-
 }
+

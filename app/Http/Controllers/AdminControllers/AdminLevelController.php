@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\AdminControllers;
 
-use App\Models\AdminModels\LevelAdmin;
+use App\Models\AdminModels\AdminLevel;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequests\AdminLevelRequest;
 use Illuminate\Http\JsonResponse;
 
@@ -12,10 +13,10 @@ class AdminLevelController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $levelAdmin = AdminLevel::with(['admin', 'language'])->get();
+            $adminLevel = AdminLevel::with(['admin', 'language'])->get();
 
             return response()->json([
-                'level_Admin' => $levelAdmin,
+                'admin_level' => $adminLevel,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -31,11 +32,11 @@ class AdminLevelController extends Controller
             $validatedData = $request->validated();
             $validatedData['admin_id'] = auth()->id(); 
 
-            $levelAdmin = AdminLevel::create($validatedData);
+            $adminLevel = AdminLevel::create($validatedData);
 
             return response()->json([
                 'message' => 'Admin level created successfully.',
-                'admin_level' => $levelAdmin,
+                'admin_level' => $adminLevel,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -48,16 +49,16 @@ class AdminLevelController extends Controller
     public function show($id): JsonResponse
     {
         try {
-            $levelAdmin = AdminLevel::with(['admin', 'language'])->find($id);
+            $adminLevel = AdminLevel::with(['admin', 'language'])->find($id);
 
-            if (!$levelAdmin) {
+            if (!$adminLevel) {
                 return response()->json([
                     'message' => 'Admin level not found.',
                 ], 404);
             }
 
             return response()->json([
-                'level_admin' => $levelAdmin,
+                'admin_level' => $adminLevel,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -71,7 +72,7 @@ class AdminLevelController extends Controller
     {
         try {
             $validatedData = $request->validated();
-            $levelAdmin = AdminLevel::find($id);
+            $adminLevel = AdminLevel::find($id);
 
             if (!$adminLevel) {
                 return response()->json([
@@ -79,7 +80,7 @@ class AdminLevelController extends Controller
                 ], 404);
             }
 
-            $levelAdmin->update($validatedData);
+            $adminLevel->update($validatedData);
 
             return response()->json([
                 'message' => 'Admin level updated successfully.',

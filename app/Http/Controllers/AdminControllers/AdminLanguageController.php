@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\AdminControllers;
 
-use App\Models\AdminModels\LanguageAdmin;
+use App\Models\AdminModels\AdminLanguage;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequests\AdminStoreLanguageRequest;
 use App\Http\Requests\AdminRequests\AdminUpdateLanguageRequest;
 

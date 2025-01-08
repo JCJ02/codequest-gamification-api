@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\AdminControllers;
 
-use App\Models\AdminModels\LessonAdmin;
+use App\Models\AdminModels\AdminLesson;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequests\AdminLessonRequest;
 use Illuminate\Http\JsonResponse;
 

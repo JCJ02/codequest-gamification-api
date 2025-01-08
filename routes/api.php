@@ -27,27 +27,27 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Admin Lesson Route (Requires Authentication Token)
 Route::prefix('admin-lessons')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin', [LessonAdminController::class, 'index']);
-    Route::get('/show/{id}', [LessonAdminController::class, 'show']);
-    Route::post('/store', [LessonAdminController::class, 'store']);
-    Route::put('/update/{id}', [LessonAdminController::class, 'update']);
-    Route::delete('/delete/{id}', [LessonAdminController::class, 'destroy']);
+    Route::get('/admin', [AdminLessonController::class, 'index']);
+    Route::get('/show/{id}', [AdminLessonController::class, 'show']);
+    Route::post('/store', [AdminLessonController::class, 'store']);
+    Route::put('/update/{id}', [AdminLessonController::class, 'update']);
+    Route::delete('/delete/{id}', [AdminLessonController::class, 'destroy']);
 });
 
 // Admin Level Route (Requires Authentication Token)
 Route::prefix('admin-levels')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin', [LevelAdminController::class, 'index']);
-    Route::post('/store', [LevelAdminController::class, 'store']);
-    Route::get('/show/{id}', [LevelAdminController::class, 'show']);
-    Route::put('/update/{id}', [LevelAdminController::class, 'update']);
-    Route::delete('/delete/{id}', [LevelAdminController::class, 'destroy']);
+    Route::get('/admin', [AdminLevelController::class, 'index']);
+    Route::post('/store', [AdminLevelController::class, 'store']);
+    Route::get('/show/{id}', [AdminLevelController::class, 'show']);
+    Route::put('/update/{id}', [AdminLevelController::class, 'update']);
+    Route::delete('/delete/{id}', [AdminLevelController::class, 'destroy']);
 });
 
 // Admin Language Route (Requires Authentication Token)
 Route::prefix('admin-languages')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin', [LanguageAdminController::class, 'index']);
-    Route::post('/store', [LanguageAdminController::class, 'store']);
-    Route::get('/show/{id}', [LanguageAdminController::class, 'show']);
-    Route::put('/update/{id}', [LanguageAdminController::class, 'update']);
-    Route::delete('/delete/{id}', [LanguageAdminController::class, 'destroy']);
+    Route::get('/admin', [AdminLanguageController::class, 'index']);
+    Route::post('/store', [AdminLanguageController::class, 'store']);
+    Route::get('/show/{id}', [AdminLanguageController::class, 'show']);
+    Route::put('/update/{id}', [AdminLanguageController::class, 'update']);
+    Route::delete('/delete/{id}', [AdminLanguageController::class, 'destroy']);
 });
