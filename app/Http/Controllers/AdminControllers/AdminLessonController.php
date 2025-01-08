@@ -83,6 +83,7 @@ class AdminLessonController extends Controller
         }
     }
 
+    // Delete a lesson
     public function destroy($id): JsonResponse
     {
         try {

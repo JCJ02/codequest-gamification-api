@@ -9,12 +9,14 @@ use App\Http\Requests\AdminRequests\AdminUpdateLanguageRequest;
 
 class AdminLanguageController extends Controller
 {
+    // Get all languages
     public function index()
     {
         $languages = AdminLanguage::with('admin')->get();
         return response()->json(['languages' => $languages], 200);
     }
 
+    // Store a new language
     public function store(AdminStoreLanguageRequest $request)
     {
         try {
@@ -34,12 +36,14 @@ class AdminLanguageController extends Controller
         }
     }
 
+    // Show a single language
     public function show($id)
     {
         $language = AdminLanguage::with('admin')->find($id);
         return response()->json(['language' => $language], 200);
     }
 
+    // Update a language
     public function update(AdminUpdateLanguageRequest $request, $id)
     {
         $language = AdminLanguage::find($id);
@@ -50,6 +54,7 @@ class AdminLanguageController extends Controller
         ], 200);
     }
 
+    // Delete a language
     public function destroy($id)
     {
         $language = AdminLanguage::find($id);

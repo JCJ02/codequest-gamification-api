@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminControllers\AdminController;
+use App\Http\Controllers\AdminControllers\AdminAuditController;
+use App\Http\Controllers\AdminControllers\AdminBadgesController;
 use App\Http\Controllers\AdminControllers\AdminLessonController;
 use App\Http\Controllers\AdminControllers\AdminLevelController;
 use App\Http\Controllers\AdminControllers\AdminLanguageController;
+use App\Http\Controllers\AdminControllers\AdminNotificationController;
 use App\Http\Controllers\UserStudentControllers\UserStudentController;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,4 +53,31 @@ Route::prefix('admin-languages')->middleware('auth:sanctum')->group(function () 
     Route::get('/show/{id}', [AdminLanguageController::class, 'show']);
     Route::put('/update/{id}', [AdminLanguageController::class, 'update']);
     Route::delete('/delete/{id}', [AdminLanguageController::class, 'destroy']);
+});
+
+// Admin Notification Route (Requires Authentication Token)
+Route::prefix('admin-notifications')->middleware('auth:sanctum')->group(function () {
+    Route::get('/admin', [AdminNotificationController::class, 'index']);
+    Route::post('/store', [AdminNotificationController::class, 'store']);
+    Route::get('/show/{id}', [AdminNotificationController::class, 'show']);
+    Route::put('/update/{id}', [AdminNotificationController::class, 'update']);
+    Route::delete('/delete/{id}', [AdminNotificationController::class, 'destroy']);
+});
+
+// Admin Badges Route (Requires Authentication Token)
+Route::prefix('admin-badges')->middleware('auth:sanctum')->group(function () {
+    Route::get('/admin', [AdminBadgesController::class, 'index']);
+    Route::post('/store', [AdminBadgesController::class, 'store']);
+    Route::get('/show/{id}', [AdminBadgesController::class, 'show']);
+    Route::put('/update/{id}', [AdminBadgesController::class, 'update']);
+    Route::delete('/delete/{id}', [AdminBadgesController::class, 'destroy']);
+});
+
+// Admin Audit Route (Requires Authentication Token)
+Route::prefix('admin-audit')->middleware('auth:sanctum')->group(function () {
+    Route::get('/admin', [AdminAuditController::class, 'index']);
+    Route::get('/{id}', [AdminAuditController::class, 'show']);
+    Route::post('/store', [AdminAuditController::class, 'store']);
+    Route::put('/update/{id}', [AdminAuditController::class, 'update']);
+    Route::delete('/delete/{id}', [AdminAuditController::class, 'destroy']);
 });
