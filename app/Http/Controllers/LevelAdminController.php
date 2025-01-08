@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 
 class LevelAdminController extends Controller
 {
-    // Fetch all admin levels
+    // Get all admin levels
     public function index(): JsonResponse
     {
         try {
@@ -29,11 +29,13 @@ class LevelAdminController extends Controller
     {
         try {
             $validatedData = $request->validated();
+            $validatedData['admin_id'] = auth()->id(); 
+
             $levelAdmin = LevelAdmin::create($validatedData);
 
             return response()->json([
                 'message' => 'Admin level created successfully.',
-                'admin_level' => $adminLevel,
+                'admin_level' => $levelAdmin,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([

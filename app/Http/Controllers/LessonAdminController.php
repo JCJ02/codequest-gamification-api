@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LessonAdmin;
-use App\Http\Requests\LessonAdminRequest;
+use App\Http\Requests\AdminLessonRequest;
 use Illuminate\Http\JsonResponse;
 
 class LessonAdminController extends Controller
@@ -25,7 +25,7 @@ class LessonAdminController extends Controller
     }
 
     // Store a new lesson
-    public function store(LessonAdminRequest $request): JsonResponse
+    public function store(AdminLessonRequest $request): JsonResponse
     {
         try {
             $validatedData = $request->validated(); 
@@ -62,7 +62,7 @@ class LessonAdminController extends Controller
     }
 
     // Update a lesson
-    public function update(LessonAdminRequest $request, $id): JsonResponse
+    public function update(AdminLessonRequest $request, $id): JsonResponse
     {
         try {
             $validatedData = $request->validated(); 

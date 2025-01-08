@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserStudentController;
 use App\Http\Controllers\LessonAdminController;
+use App\Http\Controllers\LevelAdminController;
+use App\Http\Controllers\LanguageAdminController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -24,19 +26,28 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // Admin Lesson Route (Requires Authentication Token)
-Route::prefix('lessons')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin/lesson', [LessonAdminController::class, 'index']);
-    Route::get('/admin/lesson/{id}', [LessonAdminController::class, 'show']);
-    Route::post('/admin/lesson-store', [LessonAdminController::class, 'store']);
-    Route::put('/admin/lesson-update/{id}', [LessonAdminController::class, 'update']);
-    Route::delete('/admin/lesson-delete/{id}', [LessonAdminController::class, 'destroy']);
+Route::prefix('admin-lessons')->middleware('auth:sanctum')->group(function () {
+    Route::get('/admin', [LessonAdminController::class, 'index']);
+    Route::get('/show/{id}', [LessonAdminController::class, 'show']);
+    Route::post('/store', [LessonAdminController::class, 'store']);
+    Route::put('/update/{id}', [LessonAdminController::class, 'update']);
+    Route::delete('/delete/{id}', [LessonAdminController::class, 'destroy']);
 });
 
 // Admin Level Route (Requires Authentication Token)
 Route::prefix('admin-levels')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin/level', [AdminLevelController::class, 'index']);
-    Route::post('/admin/store', [AdminLevelController::class, 'store']);
-    Route::get('/admin/{id}', [AdminLevelController::class, 'show']);
-    Route::put('/admin/update/{id}', [AdminLevelController::class, 'update']);
-    Route::delete('/admin/delete/{id}', [AdminLevelController::class, 'destroy']);
+    Route::get('/admin', [LevelAdminController::class, 'index']);
+    Route::post('/store', [LevelAdminController::class, 'store']);
+    Route::get('/show/{id}', [LevelAdminController::class, 'show']);
+    Route::put('/update/{id}', [LevelAdminController::class, 'update']);
+    Route::delete('/delete/{id}', [LevelAdminController::class, 'destroy']);
+});
+
+// Admin Language Route (Requires Authentication Token)
+Route::prefix('admin-languages')->middleware('auth:sanctum')->group(function () {
+    Route::get('/admin', [LanguageAdminController::class, 'index']);
+    Route::post('/store', [LanguageAdminController::class, 'store']);
+    Route::get('/show/{id}', [LanguageAdminController::class, 'show']);
+    Route::put('/update/{id}', [LanguageAdminController::class, 'update']);
+    Route::delete('/delete/{id}', [LanguageAdminController::class, 'destroy']);
 });

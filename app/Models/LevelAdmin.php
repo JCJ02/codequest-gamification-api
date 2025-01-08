@@ -12,14 +12,7 @@ class LevelAdmin extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'admin_level';
-
-    protected $fillable = [
-        'admin_id',
-        'language_id',
-        'level_diffuculty',
-        'level_prize',
-        'level_task',
-    ];
+    protected $fillable = ['admin_id', 'language_id', 'level_diffuculty', 'level_prize', 'level_task'];
 
     public function admin()
     {
@@ -28,6 +21,7 @@ class LevelAdmin extends Model
 
     public function language()
     {
-        return $this->belongsTo(AdminLanguage::class, 'language_id');
+        return $this->belongsTo(LanguageAdmin::class, 'language_id');
     }
+
 }
