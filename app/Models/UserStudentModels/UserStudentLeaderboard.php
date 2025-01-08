@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserStudentLeaderboard extends Model
 {
-    //
+    // USER STUDENT LEADERBOARD MODEL
 }

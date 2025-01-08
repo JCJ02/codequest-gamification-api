@@ -10,6 +10,7 @@ class AdminLevel extends Model
 {
     use HasFactory, SoftDeletes;
 
+    // ADMIN LEVEL MODEL
     protected $table = 'admin_level';
     protected $fillable = ['admin_id', 'language_id', 'level_diffuculty', 'level_prize', 'level_task'];
 

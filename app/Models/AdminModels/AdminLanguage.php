@@ -10,11 +10,9 @@ class AdminLanguage extends Model
 {
     use HasFactory, SoftDeletes;
 
+    // ADMIN LANGUAGE MODEL
     protected $table = 'admin_language';
-    
-    protected $fillable = [
-        'admin_id', 'language_title', 'language_description',
-    ];
+    protected $fillable = ['admin_id', 'language_title', 'language_description'];
 
     public function admin()
     {

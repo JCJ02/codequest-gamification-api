@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserStudentMessage extends Model
 {
-    //
+    // USER STUDENT MESSAGE MODEL
 }

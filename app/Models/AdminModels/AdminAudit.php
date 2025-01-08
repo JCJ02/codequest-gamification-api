@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdminAudit extends Model
 {
-    
+    // ADMIN AUDIT MODEL
 }

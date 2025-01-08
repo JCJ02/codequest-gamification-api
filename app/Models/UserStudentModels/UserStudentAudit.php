@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserStudentAudit extends Model
 {
-    //
+    // USER STUDENT AUDIT MODEL
 }

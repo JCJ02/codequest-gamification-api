@@ -13,13 +13,7 @@ class Admin extends Authenticatable
 
     // ADMIN MODEL
     protected $table = 'admin';
-
-    protected $fillable = [
-        'admin_name',
-        'admin_password',
-        'role',  
-    ];
-
+    protected $fillable = ['admin_name', 'admin_password', 'role'];
     protected $hidden = ['admin_password'];
 
     protected static function boot()

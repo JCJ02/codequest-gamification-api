@@ -13,16 +13,7 @@ class UserStudent extends Authenticatable
 
     // USER STUDENT MODEL    
     protected $table = "user_student";
-    
-    protected $fillable = [
-        'firstname',
-        'lastname',
-        'birthdate',
-        'email',
-        'role',
-        'username',
-        'user_password',
-    ];
+    protected $fillable = ['firstname', 'lastname', 'birthdate', 'email', 'role', 'username', 'user_password'];
 
     protected $hidden = ['user_password'];
 
