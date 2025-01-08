@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UserStudentController;
-use App\Http\Controllers\LessonAdminController;
-use App\Http\Controllers\LevelAdminController;
-use App\Http\Controllers\LanguageAdminController;
+use App\Http\Controllers\AdminControllers\AdminController;
+use App\Http\Controllers\AdminControllers\AdminLessonController;
+use App\Http\Controllers\AdminControllers\AdminLevelController;
+use App\Http\Controllers\AdminControllers\AdminLanguageController;
+use App\Http\Controllers\UserStudentControllers\UserStudentController;
 use Illuminate\Support\Facades\Auth;
 
 
