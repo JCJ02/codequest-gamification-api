@@ -6,6 +6,7 @@ use App\Models\AdminModels\AdminLesson;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequests\AdminLessonRequest;
 use Illuminate\Http\JsonResponse;
+use Auth;
 
 class AdminLessonController extends Controller
 {

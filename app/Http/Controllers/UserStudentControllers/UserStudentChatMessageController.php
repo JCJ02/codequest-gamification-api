@@ -6,6 +6,7 @@ use App\Models\UserStudentModels\UserStudentChatMessage;
 use App\Http\Requests\UserStudentRequests\UserStudentChatMessageRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Auth;
 
 class UserStudentChatMessageController extends Controller
 {
@@ -19,7 +20,6 @@ class UserStudentChatMessageController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['user_student_id'] = auth()->id();
-        // $validatedData['recepient_id'] = $this->determineRecepientId();
 
         $message = UserStudentChatMessage::create($validatedData);
 

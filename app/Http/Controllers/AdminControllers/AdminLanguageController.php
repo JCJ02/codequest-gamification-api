@@ -6,6 +6,7 @@ use App\Models\AdminModels\AdminLanguage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequests\AdminStoreLanguageRequest;
 use App\Http\Requests\AdminRequests\AdminUpdateLanguageRequest;
+use Auth;
 
 class AdminLanguageController extends Controller
 {

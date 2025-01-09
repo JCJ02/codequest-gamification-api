@@ -6,6 +6,7 @@ use App\Models\AdminModels\AdminAudit;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequests\AdminAuditRequest;
 use Illuminate\Http\JsonResponse;
+use Auth;
 
 class AdminAuditController extends Controller
 {

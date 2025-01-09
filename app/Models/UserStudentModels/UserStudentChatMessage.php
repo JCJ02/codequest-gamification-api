@@ -10,8 +10,8 @@ class UserStudentChatMessage extends Model
 {
     use HasFactory, SoftDeletes;
 
+    // USER STUDENT CHAT MESSAGE
     protected $table = 'user_student_chat_message';
-
     protected $fillable = [
         'user_student_id',
         'recepient_id',

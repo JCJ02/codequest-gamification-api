@@ -6,6 +6,7 @@ use App\Models\AdminModels\AdminNotification;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequests\AdminNotificationRequest;
 use Illuminate\Http\JsonResponse;
+use Auth;
 
 class AdminNotificationController extends Controller
 {

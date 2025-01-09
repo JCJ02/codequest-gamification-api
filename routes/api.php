@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminControllers\AdminLanguageController;
 use App\Http\Controllers\AdminControllers\AdminNotificationController;
 use App\Http\Controllers\UserStudentControllers\UserStudentController;
 use App\Http\Controllers\UserStudentControllers\UserStudentChatMessageController;
+use App\Http\Controllers\UserStudentControllers\UserStudentLeaderboardController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -90,6 +91,15 @@ Route::prefix('user-student-chat-message')->middleware('auth:sanctum')->group(fu
     Route::get('/show/{id}', [UserStudentChatMessageController::class, 'show']);
     Route::put('/update/{id}', [UserStudentChatMessageController::class, 'update']);
     Route::delete('/delete/{id}', [UserStudentChatMessageController::class, 'destroy']);
+});
+
+// User Student Leaderboard Route (Requires Authentication Token)
+Route::prefix('user-student-leaderboard')->middleware('auth:sanctum')->group(function () {
+    Route::get('/userstudent', [UserStudentLeaderboardController::class, 'index']);
+    Route::post('/store', [UserStudentLeaderboardController::class, 'store']);
+    Route::get('/show{id}', [UserStudentLeaderboardController::class, 'show']);
+    Route::put('/put{id}', [UserStudentLeaderboardController::class, 'update']);
+    Route::delete('/delete{id}', [UserStudentLeaderboardController::class, 'destroy']);
 });
 
 
