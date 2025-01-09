@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminControllers\AdminNotificationController;
 use App\Http\Controllers\UserStudentControllers\UserStudentController;
 use App\Http\Controllers\UserStudentControllers\UserStudentChatMessageController;
 use App\Http\Controllers\UserStudentControllers\UserStudentLeaderboardController;
+use App\Http\Controllers\UserStudentControllers\UserStudentMessageController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -97,9 +98,18 @@ Route::prefix('user-student-chat-message')->middleware('auth:sanctum')->group(fu
 Route::prefix('user-student-leaderboard')->middleware('auth:sanctum')->group(function () {
     Route::get('/userstudent', [UserStudentLeaderboardController::class, 'index']);
     Route::post('/store', [UserStudentLeaderboardController::class, 'store']);
-    Route::get('/show{id}', [UserStudentLeaderboardController::class, 'show']);
-    Route::put('/put{id}', [UserStudentLeaderboardController::class, 'update']);
-    Route::delete('/delete{id}', [UserStudentLeaderboardController::class, 'destroy']);
+    Route::get('/show/{id}', [UserStudentLeaderboardController::class, 'show']);
+    Route::put('/update/{id}', [UserStudentLeaderboardController::class, 'update']);
+    Route::delete('/delete/{id}', [UserStudentLeaderboardController::class, 'destroy']);
+});
+
+// User Student Message Route (Requires Authentication Token)
+Route::prefix('user-student-message')->middleware('auth:sanctum')->group(function () {
+    Route::get('/userstudent', [UserStudentMessageController::class, 'index']);
+    Route::post('/store', [UserStudentMessageController::class, 'store']);
+    Route::get('/store/{id}', [UserStudentMessageController::class, 'show']);
+    Route::put('/update/{id}', [UserStudentMessageController::class, 'update']);
+    Route::delete('/delete/{id}', [UserStudentMessageController::class, 'destroy']);
 });
 
 

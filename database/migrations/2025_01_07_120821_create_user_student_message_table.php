@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('user_student_message', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_student_id')->nullable();
+            $table->unsignedBigInteger('recipient_id')->nullable();
             $table->timestamp('message_date');
             $table->string('message_content', 100);
             $table->timestamps();

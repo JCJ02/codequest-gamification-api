@@ -12,12 +12,7 @@ class UserStudentChatMessage extends Model
 
     // USER STUDENT CHAT MESSAGE
     protected $table = 'user_student_chat_message';
-    protected $fillable = [
-        'user_student_id',
-        'recepient_id',
-        'message_date',
-        'message_content',
-    ];
+    protected $fillable = ['user_student_id', 'recepient_id', 'message_date', 'message_content'];
 
     public function userStudent()
     {

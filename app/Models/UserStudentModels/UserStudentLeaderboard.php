@@ -12,10 +12,7 @@ class UserStudentLeaderboard extends Model
 
     // USER STUDENT LEADERBOARD
     protected $table = "user_student_leaderboard";
-    protected $fillable = [
-        'user_student_id',
-        'user_student_score',
-    ];
+    protected $fillable = ['user_student_id', 'user_student_score'];
 
     public function userStudent()
     {
