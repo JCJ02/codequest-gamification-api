@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('admin', function (Blueprint $table) {
             $table->id();
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('username');
-            $table->date('birthdate');
-            $table->string('email')->unique();
-            $table->string('role')->default('admin');
+            $table->string('admin_name');
+            $table->string('admin_password');
+            $table->string('role')->default('Admin');
             $table->timestamps();
             $table->softDeletes();
         });
