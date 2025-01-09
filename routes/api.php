@@ -12,6 +12,8 @@ use App\Http\Controllers\UserStudentControllers\UserStudentController;
 use App\Http\Controllers\UserStudentControllers\UserStudentChatMessageController;
 use App\Http\Controllers\UserStudentControllers\UserStudentLeaderboardController;
 use App\Http\Controllers\UserStudentControllers\UserStudentMessageController;
+use App\Http\Controllers\UserStudentControllers\UserStudentUnlockedLevelController;
+use App\Http\Controllers\UserStudentControllers\UserStudentAuditController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -112,4 +114,20 @@ Route::prefix('user-student-message')->middleware('auth:sanctum')->group(functio
     Route::delete('/delete/{id}', [UserStudentMessageController::class, 'destroy']);
 });
 
+// User Student Unlocked Level Route (Requires Authentication Token)
+Route::prefix('user-student-unlocked-level')->middleware('auth:sanctum')->group(function () {
+    Route::get('/userstudent', [UserStudentUnlockedLevelController::class, 'index']);
+    Route::post('/store', [UserStudentUnlockedLevelController::class, 'store']);
+    Route::get('/show/{id}', [UserStudentUnlockedLevelController::class, 'show']);
+    Route::put('/update/{id}', [UserStudentUnlockedLevelController::class, 'update']);
+    Route::delete('/delete/{id}', [UserStudentUnlockedLevelController::class, 'destroy']);
+});
 
+// User Student Audit (Requires Authentication Token)
+Route::prefix('user-student-audit')->group(function () {
+    Route::get('/userstudent', [UserStudentAuditController::class, 'index']);
+    Route::post('/store', [UserStudentAuditController::class, 'store']);
+    Route::get('/show/{id}', [UserStudentAuditController::class, 'show']);
+    Route::put('/update/{id}', [UserStudentAuditController::class, 'update']);
+    Route::delete('/delete/{id}', [UserStudentAuditController::class, 'destroy']);
+});

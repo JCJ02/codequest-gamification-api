@@ -19,7 +19,8 @@ return new class extends Migration
             $table->dateTime('event_date');
             $table->timestamps();
 
-            $table->foreign('user_student_id')->references('id')->on('user_student')->onDelete('set null');       });
+            $table->foreign('user_student_id')->references('id')->on('user_student')->onDelete('set null');       
+        });
     }
 
     /**
