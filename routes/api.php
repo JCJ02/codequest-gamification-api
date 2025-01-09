@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminControllers\AdminLevelController;
 use App\Http\Controllers\AdminControllers\AdminLanguageController;
 use App\Http\Controllers\AdminControllers\AdminNotificationController;
 use App\Http\Controllers\UserStudentControllers\UserStudentController;
+use App\Http\Controllers\UserStudentControllers\UserStudentChatMessageController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -81,3 +82,14 @@ Route::prefix('admin-audit')->middleware('auth:sanctum')->group(function () {
     Route::put('/update/{id}', [AdminAuditController::class, 'update']);
     Route::delete('/delete/{id}', [AdminAuditController::class, 'destroy']);
 });
+
+// User Student Chat Message Route (Requires Authentication Token)
+Route::prefix('user-student-chat-message')->middleware('auth:sanctum')->group(function () {
+    Route::get('/userstudent', [UserStudentChatMessageController::class, 'index']);
+    Route::post('/store', [UserStudentChatMessageController::class, 'store']);
+    Route::get('/show/{id}', [UserStudentChatMessageController::class, 'show']);
+    Route::put('/update/{id}', [UserStudentChatMessageController::class, 'update']);
+    Route::delete('/delete/{id}', [UserStudentChatMessageController::class, 'destroy']);
+});
+
+

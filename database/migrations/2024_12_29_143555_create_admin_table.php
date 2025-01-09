@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('admin_name');
             $table->string('admin_password');
-            $table->string('role')->default('admin');
+            $table->string('role')->default('Admin');
             $table->timestamps();
             $table->softDeletes();
         });

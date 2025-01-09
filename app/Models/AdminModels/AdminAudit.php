@@ -10,6 +10,7 @@ class AdminAudit extends Model
 {
     use HasFactory, SoftDeletes;
 
+    // ADMIN AUDIT MODEL
     protected $table = 'admin_audit';
     protected $primaryKey = 'audit_id';  
     protected $fillable = ['admin_id', 'action_event', 'description', 'event_date',];
