@@ -6,6 +6,7 @@ use App\Models\AdminModels\AdminBadges;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequests\AdminBadgesRequest;
 use Illuminate\Http\JsonResponse;
+use Auth;
 
 class AdminBadgesController extends Controller
 {

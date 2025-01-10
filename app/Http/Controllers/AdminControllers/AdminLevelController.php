@@ -6,6 +6,7 @@ use App\Models\AdminModels\AdminLevel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequests\AdminLevelRequest;
 use Illuminate\Http\JsonResponse;
+use Auth;
 
 class AdminLevelController extends Controller
 {
