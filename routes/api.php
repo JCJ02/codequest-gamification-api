@@ -19,7 +19,6 @@ use App\Http\Controllers\UserStudentControllers\{
     UserStudentAuditController
 };
 
-
 // Admin Route (No Authentication Token Required)
 Route::post('/admin/register', [AdminController::class, 'register']);
 Route::post('/admin/login', [AdminController::class, 'login']);
