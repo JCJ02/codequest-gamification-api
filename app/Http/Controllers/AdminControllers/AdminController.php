@@ -5,12 +5,14 @@ namespace App\Http\Controllers\AdminControllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\JsonResponse;
-use App\Services\AppResponse;
 use App\Http\Resources\AdminResources\AdminResource;
-use App\Http\Requests\AdminRequests\AdminRegisterRequest;
-use App\Http\Requests\AdminRequests\AdminLoginRequest;
+use App\Http\Requests\AdminRequests\{
+    AdminRegisterRequest,
+    AdminLoginRequest,
+};
 use App\Models\AdminModels\Admin;
 use App\Http\Controllers\Controller;
+use App\Services\AppResponse;
 use Auth;
 use Log;
 

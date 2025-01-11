@@ -5,10 +5,14 @@ namespace App\Http\Controllers\UserStudentControllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\JsonResponse;
-use App\Http\Requests\UserStudentRequests\UserStudentRegisterRequest;
-use App\Http\Requests\UserStudentRequests\UserStudentLoginRequest;
+use App\Http\Resources\UserStudentResources\UserStudentResource;
+use App\Http\Requests\UserStudentRequests\{
+    UserStudentRegisterRequest,
+    UserStudentLoginRequest,
+};
 use App\Models\UserStudentModels\UserStudent;
 use App\Http\Controllers\Controller;
+use App\Services\AppResponse;
 use Auth;
 use Log;
 
@@ -22,14 +26,12 @@ class UserStudentController extends Controller
             $validatedData['user_password'] = Hash::make($validatedData['user_password']);
             $userstudent = UserStudent::create($validatedData);
 
-            return response()->json([
-                'message' => 'Student Created Successfully',
-                'userstudent' => $userstudent,
-            ], 201);
+            return AppResponse::success([
+                'userstudent' => new UserStudentResource($userstudent),
+            ], 'Registration successful.', 201);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error: ' . $e->getMessage(),
-            ], 500);
+            Log::error('User Student registration error: ' . $e->getMessage());
+            return AppResponse::error('Registration failed. Please try again later.', 500);
         }
     }
 
@@ -42,23 +44,19 @@ class UserStudentController extends Controller
             $userstudent = UserStudent::where('username', $validatedData['username'])->first();
 
             if (!$userstudent || !Hash::check($validatedData['user_password'], $userstudent->user_password)) {
-                return response()->json([
-                    'message' => 'Invalid credentials.',
-                ], 401);
+                return AppResponse::error('Invalid username or password.', 401);
             }
 
+            $userstudent->tokens()->delete();
             $token = $userstudent->createToken($userstudent->username)->plainTextToken;
-            Log::info("Token created for user: {$userstudent->username}");
 
-            return response()->json([
-                'message' => 'Login successful.',
-                'userstudent' => $userstudent,
+            return AppResponse::success([
+                'userstudent' => new UserStudentResource($userstudent),
                 'token' => $token,
-            ], 200);
+            ], 'Login successful.', 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error: ' . $e->getMessage(),
-            ], 500);
+            Log::error('User Student login error: ' . $e->getMessage());
+            return AppResponse::error('An error occurred. Please try again later.', 500);
         }
     }
 
@@ -66,24 +64,16 @@ class UserStudentController extends Controller
     public function logout(Request $request): JsonResponse
     {
         try {
-            $userstudent = $request->user();
+            $userstudent = Auth::user();
             if (!$userstudent) {
-                return response()->json([
-                    'message' => 'User Student not found.',
-                ], 404);
+                return AppResponse::error('User student not found.', 404);
             }
 
-            $userstudent->tokens->each(function ($token) {
-                $token->delete();
-            });
-
-            return response()->json([
-                'message' => 'Logout successful.',
-            ], 200);
+            $userstudent->tokens()->delete();
+            return AppResponse::success('Logged out successfully.', 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error: ' . $e->getMessage(),
-            ], 500);
+            Log::error('User Student logout error: ' . $e->getMessage());
+            return AppResponse::error('Logout failed.', 500);
         }
     }
 }
