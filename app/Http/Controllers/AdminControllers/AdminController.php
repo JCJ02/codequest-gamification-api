@@ -5,6 +5,8 @@ namespace App\Http\Controllers\AdminControllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\JsonResponse;
+use App\Services\AppResponse;
+use App\Http\Resources\AdminResources\AdminResource;
 use App\Http\Requests\AdminRequests\AdminRegisterRequest;
 use App\Http\Requests\AdminRequests\AdminLoginRequest;
 use App\Models\AdminModels\Admin;
@@ -22,14 +24,12 @@ class AdminController extends Controller
             $validatedData['admin_password'] = Hash::make($validatedData['admin_password']);
             $admin = Admin::create($validatedData);
 
-            return response()->json([
-                'message' => 'Admin Created Successfully',
-                'admin' => $admin,
-            ], 201);
+            return AppResponse::success([
+                'admin' => new AdminResource($admin),
+            ], 'Registration Successful', 201);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error: ' . $e->getMessage(),
-            ], 500);
+            Log::error('Admin Registration Error: ' . $e->getMessage());
+            return AppResponse::error('Registration Failed. Please try again later.', 500);
         }
     }
 
@@ -42,23 +42,19 @@ class AdminController extends Controller
             $admin = Admin::where('admin_name', $validatedData['admin_name'])->first();
 
             if (!$admin || !Hash::check($validatedData['admin_password'], $admin->admin_password)) {
-                return response()->json([
-                    'message' => 'Invalid credentials.',
-                ], 401);
+               return AppResponse::error('Invalid name or password', 401);
             }
 
+            $admin->tokens()->delete();
             $token = $admin->createToken($admin->admin_name)->plainTextToken;
-            Log::info("Token created for admin: {$admin->admin_name}");
 
-            return response()->json([
-                'message' => 'Login successful.',
-                'admin' => $admin,
+            return AppResponse::success([
+                'admin' => new AdminResource($admin),
                 'token' => $token,
-            ], 200);
+            ], 'Login Successful', 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error: ' . $e->getMessage(),
-            ], 500);
+            Log::error('Admin Login Error: ' . $e->getMessage());
+            return AppResponse::error('An error occurred. Please try again later.', 500);
         }
     }
 
@@ -66,24 +62,16 @@ class AdminController extends Controller
     public function logout(Request $request): JsonResponse
     {
         try {
-            $admin = $request->user(); 
-            if (!$admin) {
-                return response()->json([
-                    'message' => 'Admin not found.',
-                ], 404);
+            $admin = Auth::admin();
+            if ($admin) {
+                return AppResponse::error('Admin not authenticated', 401);
             }
 
-            $admin->tokens->each(function ($token) {
-                $token->delete();
-            });
-
-            return response()->json([
-                'message' => 'Logout successful.',
-            ], 200);
+            $admin->tokens()->delete();
+            return AppResponse::success('Logged out Successfully', 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error: ' . $e->getMessage(),
-            ], 500);
+            Log::error('Admin Logout Error: ' . $e->getMessage());
+            return AppResponse::error('Log out failed', 500);
         }
     }
 }

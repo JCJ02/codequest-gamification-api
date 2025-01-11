@@ -1,20 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminControllers\AdminController;
-use App\Http\Controllers\AdminControllers\AdminAuditController;
-use App\Http\Controllers\AdminControllers\AdminBadgesController;
-use App\Http\Controllers\AdminControllers\AdminLessonController;
-use App\Http\Controllers\AdminControllers\AdminLevelController;
-use App\Http\Controllers\AdminControllers\AdminLanguageController;
-use App\Http\Controllers\AdminControllers\AdminNotificationController;
-use App\Http\Controllers\UserStudentControllers\UserStudentController;
-use App\Http\Controllers\UserStudentControllers\UserStudentChatMessageController;
-use App\Http\Controllers\UserStudentControllers\UserStudentLeaderboardController;
-use App\Http\Controllers\UserStudentControllers\UserStudentMessageController;
-use App\Http\Controllers\UserStudentControllers\UserStudentUnlockedLevelController;
-use App\Http\Controllers\UserStudentControllers\UserStudentAuditController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminControllers\{
+    AdminController,
+    AdminAuditController,
+    AdminBadgesController,
+    AdminLessonController,
+    AdminLevelController,
+    AdminLanguageController,
+    AdminNotificationController
+};
+use App\Http\Controllers\UserStudentControllers\{
+    UserStudentController,
+    UserStudentChatMessageController,
+    UserStudentLeaderboardController,
+    UserStudentMessageController,
+    UserStudentUnlockedLevelController,
+    UserStudentAuditController
+};
 
 
 // Admin Route (No Authentication Token Required)
@@ -35,7 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Admin Lesson Route (Requires Authentication Token)
 Route::prefix('admin-lessons')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin', [AdminLessonController::class, 'index']);
+    Route::get('/', [AdminLessonController::class, 'index']);
     Route::get('/show/{id}', [AdminLessonController::class, 'show']);
     Route::post('/store', [AdminLessonController::class, 'store']);
     Route::put('/update/{id}', [AdminLessonController::class, 'update']);
@@ -44,7 +47,7 @@ Route::prefix('admin-lessons')->middleware('auth:sanctum')->group(function () {
 
 // Admin Level Route (Requires Authentication Token)
 Route::prefix('admin-levels')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin', [AdminLevelController::class, 'index']);
+    Route::get('/', [AdminLevelController::class, 'index']);
     Route::post('/store', [AdminLevelController::class, 'store']);
     Route::get('/show/{id}', [AdminLevelController::class, 'show']);
     Route::put('/update/{id}', [AdminLevelController::class, 'update']);
@@ -53,7 +56,7 @@ Route::prefix('admin-levels')->middleware('auth:sanctum')->group(function () {
 
 // Admin Language Route (Requires Authentication Token)
 Route::prefix('admin-languages')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin', [AdminLanguageController::class, 'index']);
+    Route::get('/', [AdminLanguageController::class, 'index']);
     Route::post('/store', [AdminLanguageController::class, 'store']);
     Route::get('/show/{id}', [AdminLanguageController::class, 'show']);
     Route::put('/update/{id}', [AdminLanguageController::class, 'update']);
@@ -62,7 +65,7 @@ Route::prefix('admin-languages')->middleware('auth:sanctum')->group(function () 
 
 // Admin Notification Route (Requires Authentication Token)
 Route::prefix('admin-notifications')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin', [AdminNotificationController::class, 'index']);
+    Route::get('/', [AdminNotificationController::class, 'index']);
     Route::post('/store', [AdminNotificationController::class, 'store']);
     Route::get('/show/{id}', [AdminNotificationController::class, 'show']);
     Route::put('/update/{id}', [AdminNotificationController::class, 'update']);
@@ -71,7 +74,7 @@ Route::prefix('admin-notifications')->middleware('auth:sanctum')->group(function
 
 // Admin Badges Route (Requires Authentication Token)
 Route::prefix('admin-badges')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin', [AdminBadgesController::class, 'index']);
+    Route::get('/', [AdminBadgesController::class, 'index']);
     Route::post('/store', [AdminBadgesController::class, 'store']);
     Route::get('/show/{id}', [AdminBadgesController::class, 'show']);
     Route::put('/update/{id}', [AdminBadgesController::class, 'update']);
@@ -79,8 +82,8 @@ Route::prefix('admin-badges')->middleware('auth:sanctum')->group(function () {
 });
 
 // Admin Audit Route (Requires Authentication Token)
-Route::prefix('admin-audit')->middleware('auth:sanctum')->group(function () {
-    Route::get('/admin', [AdminAuditController::class, 'index']);
+Route::prefix('admin-audits')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', [AdminAuditController::class, 'index']);
     Route::get('/{id}', [AdminAuditController::class, 'show']);
     Route::post('/store', [AdminAuditController::class, 'store']);
     Route::put('/update/{id}', [AdminAuditController::class, 'update']);
@@ -88,8 +91,8 @@ Route::prefix('admin-audit')->middleware('auth:sanctum')->group(function () {
 });
 
 // User Student Chat Message Route (Requires Authentication Token)
-Route::prefix('user-student-chat-message')->middleware('auth:sanctum')->group(function () {
-    Route::get('/userstudent', [UserStudentChatMessageController::class, 'index']);
+Route::prefix('user-student-chat-messages')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', [UserStudentChatMessageController::class, 'index']);
     Route::post('/store', [UserStudentChatMessageController::class, 'store']);
     Route::get('/show/{id}', [UserStudentChatMessageController::class, 'show']);
     Route::put('/update/{id}', [UserStudentChatMessageController::class, 'update']);
@@ -97,8 +100,8 @@ Route::prefix('user-student-chat-message')->middleware('auth:sanctum')->group(fu
 });
 
 // User Student Leaderboard Route (Requires Authentication Token)
-Route::prefix('user-student-leaderboard')->middleware('auth:sanctum')->group(function () {
-    Route::get('/userstudent', [UserStudentLeaderboardController::class, 'index']);
+Route::prefix('user-student-leaderboards')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', [UserStudentLeaderboardController::class, 'index']);
     Route::post('/store', [UserStudentLeaderboardController::class, 'store']);
     Route::get('/show/{id}', [UserStudentLeaderboardController::class, 'show']);
     Route::put('/update/{id}', [UserStudentLeaderboardController::class, 'update']);
@@ -106,8 +109,8 @@ Route::prefix('user-student-leaderboard')->middleware('auth:sanctum')->group(fun
 });
 
 // User Student Message Route (Requires Authentication Token)
-Route::prefix('user-student-message')->middleware('auth:sanctum')->group(function () {
-    Route::get('/userstudent', [UserStudentMessageController::class, 'index']);
+Route::prefix('user-student-messages')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', [UserStudentMessageController::class, 'index']);
     Route::post('/store', [UserStudentMessageController::class, 'store']);
     Route::get('/store/{id}', [UserStudentMessageController::class, 'show']);
     Route::put('/update/{id}', [UserStudentMessageController::class, 'update']);
@@ -115,8 +118,8 @@ Route::prefix('user-student-message')->middleware('auth:sanctum')->group(functio
 });
 
 // User Student Unlocked Level Route (Requires Authentication Token)
-Route::prefix('user-student-unlocked-level')->middleware('auth:sanctum')->group(function () {
-    Route::get('/userstudent', [UserStudentUnlockedLevelController::class, 'index']);
+Route::prefix('user-student-unlocked-levels')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', [UserStudentUnlockedLevelController::class, 'index']);
     Route::post('/store', [UserStudentUnlockedLevelController::class, 'store']);
     Route::get('/show/{id}', [UserStudentUnlockedLevelController::class, 'show']);
     Route::put('/update/{id}', [UserStudentUnlockedLevelController::class, 'update']);
@@ -124,8 +127,8 @@ Route::prefix('user-student-unlocked-level')->middleware('auth:sanctum')->group(
 });
 
 // User Student Audit (Requires Authentication Token)
-Route::prefix('user-student-audit')->group(function () {
-    Route::get('/userstudent', [UserStudentAuditController::class, 'index']);
+Route::prefix('user-student-audits')->group(function () {
+    Route::get('/', [UserStudentAuditController::class, 'index']);
     Route::post('/store', [UserStudentAuditController::class, 'store']);
     Route::get('/show/{id}', [UserStudentAuditController::class, 'show']);
     Route::put('/update/{id}', [UserStudentAuditController::class, 'update']);
