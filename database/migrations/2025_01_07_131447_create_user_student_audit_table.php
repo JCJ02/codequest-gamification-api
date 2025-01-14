@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_student_id')->nullable();
             $table->string('action_event', 50);
             $table->text('description');
-            $table->dateTime('event_date');
+            $table->dateTime('event_date'); 
             $table->timestamps();
 
             $table->foreign('user_student_id')->references('id')->on('user_student')->onDelete('set null');       
